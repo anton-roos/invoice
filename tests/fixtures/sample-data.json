@@ -1,0 +1,49 @@
+{
+  "company": {
+    "name": "Example Co",
+    "logo": "",
+    "vatNo": "",
+    "postalAddress": ["1 Example Street", "Suburb", "Town", "City", "0001"],
+    "physicalAddress": ["1 Example Street", "Suburb", "Town", "City", "0001"],
+    "bank": {
+      "name": "Example Bank",
+      "accountHolder": "Example Co",
+      "accountNumber": "0000000000",
+      "accountType": "Cheque",
+      "branchCode": "000000"
+    }
+  },
+  "settings": {
+    "currencySymbol": "R",
+    "numberPrefix": "INV",
+    "numberPadding": 7,
+    "nextInvoiceNumber": 2
+  },
+  "clients": [
+    {
+      "id": "c1",
+      "name": "Sample Client Ltd",
+      "vatNo": "",
+      "postalAddress": ["2 Sample Road", "Suburb", "Town", "0002"],
+      "physicalAddress": ["2 Sample Road", "Suburb", "Town", "0002"]
+    }
+  ],
+  "items": [
+    { "code": "COS001", "description": "Software Engineering", "unitPrice": 300 },
+    { "code": "COS002", "description": "Coaching", "unitPrice": 300 }
+  ],
+  "invoices": [
+    {
+      "id": "inv1",
+      "number": "INV0000001",
+      "reference": "TEST",
+      "date": "2026-01-19",
+      "dueDate": "2026-01-31",
+      "clientId": "c1",
+      "lineItems": [
+        { "code": "COS001", "description": "Software Engineering", "quantity": 6, "unitPrice": 300, "vatPct": 0 },
+        { "code": "COS002", "description": "Coaching", "quantity": 5, "unitPrice": 300, "vatPct": 0 }
+      ]
+    }
+  ]
+}

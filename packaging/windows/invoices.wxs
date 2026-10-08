@@ -1,0 +1,67 @@
+<!--
+  Windows installer for Invoices (WiX Toolset v5). Built by package.ps1:
+
+    wix build invoices.wxs -arch x64 -d Version=0.1.0 -d BinDir=<staged files> -d IconPath=<icon.ico>
+
+  Installs per-machine into "C:\Program Files\Invoices" with Start Menu and
+  desktop shortcuts. The SQLite database is NOT installed or removed here:
+  the app creates it per user in %APPDATA%\Invoices on first run, so
+  upgrading or uninstalling never touches your invoices.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+      Name="Invoices"
+      Manufacturer="Invoices"
+      Version="$(Version)"
+      UpgradeCode="573c625c-9e98-4a4d-b0da-a5a697548985"
+      Scope="perMachine"
+      Compressed="yes">
+
+    <!-- Installing a newer (or rebuilt same) version replaces the old one. -->
+    <MajorUpgrade
+        AllowSameVersionUpgrades="yes"
+        DowngradeErrorMessage="A newer version of Invoices is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="AppIcon" SourceFile="$(IconPath)" />
+    <Property Id="ARPPRODUCTICON" Value="AppIcon" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Invoices">
+        <Component Id="AppExe">
+          <File Id="InvoicesExe" Source="$(BinDir)\invoices.exe" KeyPath="yes">
+            <Shortcut
+                Id="StartMenuShortcut"
+                Directory="ProgramMenuFolder"
+                Name="Invoices"
+                Description="Create and export invoices"
+                WorkingDirectory="INSTALLFOLDER"
+                Icon="AppIcon"
+                Advertise="yes" />
+            <Shortcut
+                Id="DesktopShortcut"
+                Directory="DesktopFolder"
+                Name="Invoices"
+                Description="Create and export invoices"
+                WorkingDirectory="INSTALLFOLDER"
+                Icon="AppIcon"
+                Advertise="yes" />
+          </File>
+        </Component>
+        <Component Id="ImporterExe">
+          <File Id="ImporterExe" Source="$(BinDir)\invoices-import.exe" KeyPath="yes" />
+        </Component>
+        <Component Id="Readme">
+          <File Id="Readme" Source="$(BinDir)\README.md" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+    <StandardDirectory Id="DesktopFolder" />
+
+    <Feature Id="Main" Title="Invoices">
+      <ComponentRef Id="AppExe" />
+      <ComponentRef Id="ImporterExe" />
+      <ComponentRef Id="Readme" />
+    </Feature>
+  </Package>
+</Wix>

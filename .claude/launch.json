@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "invoice-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8631"],
+      "port": 8631
+    }
+  ]
+}
